@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <%= csrf_meta_tag() %>
+    <%= live_title_tag assigns[:page_title] || "HTTP Client", suffix: " · Phoenix Framework" %>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <!-- Añadimos Tailwind CSS desde CDN para estilos rápidos -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+  <body class="bg-gray-50">
+    <header class="bg-blue-600 text-white shadow-md">
+      <div class="container mx-auto py-4 px-4">
+        <div class="flex justify-between items-center">
+          <div class="text-2xl font-bold">HTTP Client PhX</div>
+          <nav>
+            <ul class="flex space-x-4">
+              <li><%= link "Cliente", to: Routes.request_path(@conn, :request) %></li>
+              <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+                <li><%= link "Dashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+              <% end %>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main>
+      <%= @inner_content %>
+    </main>
+  </body>
+</html>
