@@ -40,8 +40,21 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
+
+originslist = [
+  "//*.herokuapp.com",
+  "//*.localhost",
+  "//*.localdev.io",
+  "//*.macserver",
+ ## "localhost",
+  "https://ca81-200-68-170-8.ngrok-free.app",
+  "//*.#{System.get_env("BASE_DOMAIN")}"
+]
+
   host = System.get_env("PHX_HOST") || "example.com"
   port = String.to_integer(System.get_env("PORT") || "4000")
+
+
 
   config :http_client_phx, HttpClientPhxWeb.Endpoint,
     url: [host: host, port: 443],
@@ -53,7 +66,8 @@ if config_env() == :prod do
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: port
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    check_origin: originslist
 
   # ## Using releases
   #
